@@ -8,7 +8,7 @@
   outputs = { ... }: rec {
 
     pairsList = [
-      [ "a" "󱤀" ]
+      [ "a!" "󱤀" ]
       [ "akesi" "󱤁" ]
       [ "ala" "󱤂" ]
       [ "alasa" "󱤃" ]
