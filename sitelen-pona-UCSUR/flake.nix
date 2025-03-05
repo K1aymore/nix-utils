@@ -145,6 +145,14 @@
       [ "n" "󱦆" ]
       [ "misikeke" "󱦇" ]
       [ "ku" "󱦈" ]
+      [ "[" "󱦐" ]
+      [ "]" "󱦑" ]
+      [ "." "󱦜" ]
+      [ ":" "󱦝" ]
+      [ "pake" "󱦠" ]
+      [ "apeja" "󱦡" ]
+      [ "majuna" "󱦢" ]
+      [ "powe" "󱦣" ]
     ];
 
     lasinaList = map (pair: builtins.elemAt pair 0) pairsList;
@@ -153,7 +161,14 @@
 
     lasina2ucsur = text: builtins.replaceStrings lasinaList ucsurList text;
     
-    ucsur2lasina = text: builtins.replaceStrings ucsurList lasinaList text;
+    ucsur2lasina = text:
+    builtins.replaceStrings
+      [ " \n\n" " \n" ]
+      [ ".\n\n" ". " ]
+      (builtins.replaceStrings
+        (ucsurList)
+        (map (f: f + " ") lasinaList)
+        text);
 
   };
 
