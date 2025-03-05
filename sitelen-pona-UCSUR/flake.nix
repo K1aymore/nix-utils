@@ -163,8 +163,8 @@
     
     ucsur2lasina = text:
     builtins.replaceStrings
-      [ " \n\n" " \n" ]
-      [ ".\n\n" ". " ]
+      [ " \n\n" " \n" "[ " " ," ]
+      [ ".\n\n" ". "  "["  ", "]
       (builtins.replaceStrings
         (ucsurList)
         (map (f: f + " ") lasinaList)
