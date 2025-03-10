@@ -156,6 +156,7 @@
       
       # not UCSUR but helpful
       [ " " "　" ]
+      [ "" "‍" ] # zero width combiner
     ];
 
     lasinaList = map (pair: builtins.elemAt pair 0) pairsList;
@@ -166,8 +167,8 @@
     
     ucsur2lasina = text:
     builtins.replaceStrings
-      [ " \n\n" " \n" "[ " " ," " "  ]
-      [ ".\n\n" ". "  "["  ", " ", " ]
+      [ " \n\n" " \n" "[ " " ," ]
+      [ ".\n\n" ". "  "["  ", " ]
       (builtins.replaceStrings
         (ucsurList)
         (map (f: f + " ") lasinaList)
