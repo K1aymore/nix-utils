@@ -8,7 +8,7 @@
   outputs = { ... }: rec {
 
     pairsList = [
-      [ "a!" "󱤀" ]
+      [ "a" "󱤀" ]
       [ "akesi" "󱤁" ]
       [ "ala" "󱤂" ]
       [ "alasa" "󱤃" ]
@@ -153,6 +153,9 @@
       [ "apeja" "󱦡" ]
       [ "majuna" "󱦢" ]
       [ "powe" "󱦣" ]
+      
+      # not UCSUR but helpful
+      [ " " "　" ]
     ];
 
     lasinaList = map (pair: builtins.elemAt pair 0) pairsList;
@@ -163,8 +166,8 @@
     
     ucsur2lasina = text:
     builtins.replaceStrings
-      [ " \n\n" " \n" "[ " " ," ]
-      [ ".\n\n" ". "  "["  ", "]
+      [ " \n\n" " \n" "[ " " ," " "  ]
+      [ ".\n\n" ". "  "["  ", " ", " ]
       (builtins.replaceStrings
         (ucsurList)
         (map (f: f + " ") lasinaList)
