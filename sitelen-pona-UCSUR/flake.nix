@@ -240,8 +240,8 @@
 
     ucsur2hiragana = text:
       builtins.replaceStrings
-      ([ "［　" "　," "　　" ] ++ hirReplaceList)
-      ([ "［"  "、"  "　" ] ++ hirList)
+      [ "［</span>　" "　," "　　" ]
+      [ "［</span>"   "、"  "　" ]
       (builtins.replaceStrings
         ucsurWordsList
         (map (f: "<span class=\"hirWord\">" + f + "</span>　") hiraganaWordsList)
