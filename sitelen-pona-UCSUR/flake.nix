@@ -155,7 +155,6 @@
       [ "powe" "󱦣" ]
       
       # not UCSUR but helpful
-      [ ", " "　" ] # not a fan because makes line breaks ambiguous
       #[ "" "‍" ] # zero width joiner
       [ " \"" "「" ]
       [ "\" " "」" ]
@@ -229,8 +228,8 @@
     
     ucsur2lasina = text:
       builtins.replaceStrings
-      [ " \n\n" " \n" "[ " " ," "  " ]
-      [ ".\n\n" ". "  "["  ", " " "  ]
+      [ " \n\n" " \n" "[ " " 　" "  " "‍" ]
+      [ ".\n\n" ". "  "["  ", " " "  "" ]
       (builtins.replaceStrings
         ucsurWordsList
         (map (f: f + " ") lasinaWordsList)
@@ -238,11 +237,11 @@
 
     ucsur2hiragana = text:
       builtins.replaceStrings
-      [ " \n\n" " \n" "[ " " ,"  "  " ]
-      [ ".\n\n" " "   "["  "、 "  " " ]
+      [ " \n\n" " \n" "[　" "　," "　　" ]
+      [ ".\n\n" " "   "["  "、"  "　" ]
       (builtins.replaceStrings
         ucsurWordsList
-        (map (f: f + " ") hiraganaWordsList) text);
+        (map (f: f + "　") hiraganaWordsList) text);
 
   };
 
