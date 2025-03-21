@@ -155,24 +155,94 @@
       [ "powe" "󱦣" ]
       
       # not UCSUR but helpful
-      [ " " "　" ]
-      [ "" "‍" ] # zero width combiner
+      [ ", " "　" ] # not a fan because makes line breaks ambiguous
+      #[ "" "‍" ] # zero width joiner
+      [ " \"" "「" ]
+      [ "\" " "」" ]
+    ];
+    
+    lasinaToHiraganaList = [
+      [ "いえ" "je" ]
+      [ "うい" "wi" ]
+      [ "うえ" "we" ]
+      [ "あ" "a" ]
+      [ "い" "i" ]
+      [ "う" "u" ]
+      [ "え" "e" ]
+      [ "お" "o" ]
+      [ "か" "ka" ]
+      [ "き" "ki" ]
+      [ "く" "ku" ]
+      [ "け" "ke" ]
+      [ "こ" "ko" ]
+      [ "さ" "sa" ]
+      [ "し" "si" ]
+      [ "す" "su" ]
+      [ "せ" "se" ]
+      [ "そ" "so" ]
+      [ "た" "ta" ]
+      [ "つ" "tu" ]
+      [ "て" "te" ]
+      [ "と" "to" ]
+      [ "な" "na" ]
+      [ "に" "ni" ]
+      [ "ぬ" "nu" ]
+      [ "ね" "ne" ]
+      [ "の" "no" ]
+      [ "ぱ" "pa" ]
+      [ "ぴ" "pi" ]
+      [ "ぷ" "pu" ]
+      [ "ぺ" "pe" ]
+      [ "ぽ" "po" ]
+      [ "ま" "ma" ]
+      [ "み" "mi" ]
+      [ "む" "mu" ]
+      [ "め" "me" ]
+      [ "も" "mo" ]
+      [ "や" "ja" ]
+      [ "ゆ" "ju" ]
+      [ "よ" "jo" ]
+      [ "ら" "la" ]
+      [ "り" "li" ]
+      [ "る" "lu" ]
+      [ "れ" "le" ]
+      [ "ろ" "lo" ]
+      [ "わ" "wa" ]
+      [ "ん" "n" ]
     ];
 
-    lasinaList = map (pair: builtins.elemAt pair 0) pairsList;
 
-    ucsurList = map (pair: builtins.elemAt pair 1) pairsList;
+    lasinaWordsList = map (pair: builtins.elemAt pair 0) pairsList;
 
-    lasina2ucsur = text: builtins.replaceStrings lasinaList ucsurList text;
+    ucsurWordsList = map (pair: builtins.elemAt pair 1) pairsList;
+
+    hiraganaWordsList = let
+      hirList = map (pair: builtins.elemAt pair 0) lasinaToHiraganaList;
+      replaceList = map (pair: builtins.elemAt pair 1) lasinaToHiraganaList;
+    in
+      map (lasina: builtins.replaceStrings
+        replaceList hirList lasina) lasinaWordsList;
+    
+
+
+    lasina2ucsur = text: builtins.replaceStrings lasinaWordsList ucsurWordsList text;
     
     ucsur2lasina = text:
-    builtins.replaceStrings
-      [ " \n\n" " \n" "[ " " ," ]
-      [ ".\n\n" ". "  "["  ", " ]
+      builtins.replaceStrings
+      [ " \n\n" " \n" "[ " " ," "  " ]
+      [ ".\n\n" ". "  "["  ", " " "  ]
       (builtins.replaceStrings
-        (ucsurList)
-        (map (f: f + " ") lasinaList)
+        ucsurWordsList
+        (map (f: f + " ") lasinaWordsList)
         text);
+
+    ucsur2hiragana = text:
+      builtins.replaceStrings
+      [ " \n\n" " \n" "[ " " ,"  "  " ]
+      [ ".\n\n" " "   "["  "、 "  " " ]
+      (builtins.replaceStrings
+        ucsurWordsList
+        (map (f: f + " ") hiraganaWordsList) text);
 
   };
 
