@@ -213,6 +213,7 @@
       [ "］" "]" ]
       [ "【" " \"" ]
       [ "】" "\" " ]
+      [ "、" "," ]
     ];
 
     hirList = map (pair: builtins.elemAt pair 0) lasinaToHiraganaList;
@@ -231,8 +232,8 @@
     
     ucsur2lasina = text:
       builtins.replaceStrings
-      [ " . \n\n" " . \n" "[ " " ," " 　" "  " "‍" ]
-      [ ".\n\n"   ". "    "["  ", " ", " " "  "" ]
+      [ " . \n\n" " . \n" "[ " " la " " !" " :" " ,"  " 　"  "  " "‍" ]
+      [ ".\n\n"   ". "    "["  " la, " "!" ":"  ", "  ", "  " "  "" ]
       (builtins.replaceStrings
         ucsurWordsList
         (map (f: f + " ") lasinaWordsList)
@@ -240,12 +241,9 @@
 
     ucsur2hiragana = text:
       builtins.replaceStrings
-      [ "［</span> " " ," "  " "‍" ]
-      [ "［</span>"  "、"  "" "" ]
-      (builtins.replaceStrings
         ucsurWordsList
-        (map (f: "<span class=\"hirWord\">" + f + "</span>") hiraganaWordsList)
-        text);
+        hiraganaWordsList
+        text;
 
   };
 
